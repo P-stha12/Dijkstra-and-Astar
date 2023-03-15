@@ -1,6 +1,6 @@
 # Instructions
 
-## Installation
+## Required Installations
 * pip install pygame
 
 ## Controls
