@@ -21,23 +21,37 @@ def heuristic(a, b):
 
 
 #cols, rows = 23, 13
-cols, rows = 13, 11
+#cols, rows = 13, 11
+cols, rows = 24, 13
 TILE = 50
 
 pg.init()
 sc = pg.display.set_mode([cols * TILE, rows * TILE])
 clock = pg.time.Clock()
-grid = ['9999999999999',
-        '9999999999999',
-        '1118811881111',
-        '8811111111188',
-        '1111144441111',
-        '1881144418881',
-        '1111444188881',
-        '1111144411111',
-        '1884444411111',
-        '1881144418881',
-        '1111144411111']
+#grid = ['9999999999999',
+        #'9999999999999',
+        #'1118811881111',
+        #'8811111111188',
+        #'1111144441111',
+        #'1881144418881',
+        #'1111444188881',
+        #'1111144411111',
+        #'1884444411111',
+        #'1881144418881',
+        #'1111144411111']
+grid = ['223233232322322322222122',
+        '544444222222222222522123',
+        '544444322111111225522122',
+        '244444221122221125522125',
+        '244444311255232112222122',
+        '111111112252222211111122',
+        '522222212255253221444444',
+        '222232212222252321444444',
+        '323223212525232211444444',
+        '225522211222222112444444',
+        '255553221111111125444444',
+        '255552232252222222444444',
+        '255532522222523222322322', ]
 
 grid = [[int(char) for char in string ] for string in grid]
 # dict of adjacency lists
@@ -47,7 +61,7 @@ for y, row in enumerate(grid):
         graph[(x, y)] = graph.get((x, y), []) + get_next_nodes(x, y)
 
 
-bg = pg.image.load('img/map.png').convert()
+bg = pg.image.load('img/newmap.png').convert()
 bg = pg.transform.scale(bg, (cols * TILE, rows * TILE))
 
 
@@ -75,13 +89,14 @@ while True:
             elif event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     start = pg.mouse.get_pos()
-                    start = (start[0] // (50), start[1] // (50))
+                    start = (start[0] // (TILE), start[1] // (TILE))
+                    queue = []
                     heappush(queue, (0, start))
                     cost_visited = {start: 0}
                     visited = {start: None}
                 if event.button == 3:
                     goal = pg.mouse.get_pos()
-                    goal = (goal[0] // (50), goal[1] // (50))
+                    goal = (goal[0] // (TILE), goal[1] // (TILE))
 
 
             if event.type == pg.KEYDOWN:
@@ -98,7 +113,7 @@ while True:
         [pg.draw.rect(sc, pg.Color('darkslategray'), get_rect(*xy)) for _, xy in queue]
         pg.draw.circle(sc, pg.Color('blue'), *get_circle(*start))
         pg.draw.circle(sc, pg.Color('purple'), *get_circle(*goal))
-        # Astar logic
+        # Dijkstra logic
         if startflag:
             if queue:
                 cur_cost, cur_node = heappop(queue)
@@ -142,13 +157,14 @@ while True:
             elif event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     start = pg.mouse.get_pos()
-                    start = (start[0] // (50), start[1] // (50))
+                    start = (start[0] // (TILE), start[1] // (TILE))
+                    queue = []
                     heappush(queue, (0, start))
                     cost_visited = {start: 0}
                     visited = {start: None}
                 if event.button == 3:
                     goal = pg.mouse.get_pos()
-                    goal = (goal[0] // (50), goal[1] // (50))
+                    goal = (goal[0] // (TILE), goal[1] // (TILE))
 
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_LEFT:
