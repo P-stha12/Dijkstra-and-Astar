@@ -98,7 +98,7 @@ while True:
         [pg.draw.rect(sc, pg.Color('darkslategray'), get_rect(*xy)) for _, xy in queue]
         pg.draw.circle(sc, pg.Color('blue'), *get_circle(*start))
         pg.draw.circle(sc, pg.Color('purple'), *get_circle(*goal))
-        # Dijkstra logic
+        # Astar logic
         if startflag:
             if queue:
                 cur_cost, cur_node = heappop(queue)
